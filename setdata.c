@@ -2,7 +2,6 @@
 
 #define MAX 100
 
-
 int isMember(int set[], int n, int element) {
     for (int i = 0; i < n; i++) {
         if (set[i] == element)
@@ -11,8 +10,11 @@ int isMember(int set[], int n, int element) {
     return 0;
 }
 
-
 int insert(int set[], int n, int element) {
+    if (n >= MAX) {
+        printf("Set full. Cannot insert more elements.\n");
+        return n;
+    }
     if (isMember(set, n, element)) {
         printf("Element already exists in the set.\n");
         return n;
@@ -20,7 +22,6 @@ int insert(int set[], int n, int element) {
     set[n] = element;
     return n + 1;
 }
-
 
 int deleteElement(int set[], int n, int element) {
     if (!isMember(set, n, element)) {
@@ -38,7 +39,6 @@ int deleteElement(int set[], int n, int element) {
     return n - 1;
 }
 
-
 void display(int set[], int n) {
     printf("{ ");
     for (int i = 0; i < n; i++)
@@ -46,15 +46,10 @@ void display(int set[], int n) {
     printf("}\n");
 }
 
-
 int setUnion(int A[], int nA, int B[], int nB, int U[]) {
     int k = 0;
-
- 
     for (int i = 0; i < nA; i++)
         U[k++] = A[i];
-
- 
     for (int i = 0; i < nB; i++) {
         if (!isMember(A, nA, B[i]))
             U[k++] = B[i];
@@ -70,7 +65,6 @@ int setIntersection(int A[], int nA, int B[], int nB, int I[]) {
     }
     return k;
 }
-
 
 int setDifference(int A[], int nA, int B[], int nB, int D[]) {
     int k = 0;
@@ -127,38 +121,25 @@ int main() {
             break;
 
         case 5:
-            printf("Enter number of elements in Set B: ");
-            scanf("%d", &nB);
-            printf("Enter elements of Set B:\n");
-            for (int i = 0; i < nB; i++)
-                scanf("%d", &setB[i]);
-
-            nR = setUnion(setA, nA, setB, nB, result);
-            printf("A ∪ B = ");
-            display(result, nR);
-            break;
-
         case 6:
-            printf("Enter number of elements in Set B: ");
-            scanf("%d", &nB);
-            printf("Enter elements of Set B:\n");
-            for (int i = 0; i < nB; i++)
-                scanf("%d", &setB[i]);
-
-            nR = setIntersection(setA, nA, setB, nB, result);
-            printf("A ∩ B = ");
-            display(result, nR);
-            break;
-
         case 7:
             printf("Enter number of elements in Set B: ");
             scanf("%d", &nB);
+            if (nB > MAX) nB = MAX;
             printf("Enter elements of Set B:\n");
             for (int i = 0; i < nB; i++)
                 scanf("%d", &setB[i]);
 
-            nR = setDifference(setA, nA, setB, nB, result);
-            printf("A - B = ");
+            if (choice == 5) {
+                nR = setUnion(setA, nA, setB, nB, result);
+                printf("A ∪ B = ");
+            } else if (choice == 6) {
+                nR = setIntersection(setA, nA, setB, nB, result);
+                printf("A ∩ B = ");
+            } else {
+                nR = setDifference(setA, nA, setB, nB, result);
+                printf("A - B = ");
+            }
             display(result, nR);
             break;
 
