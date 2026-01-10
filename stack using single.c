@@ -1,5 +1,7 @@
- #include <stdio.h>
-#include <stdlib.h>
+//Stack using single linked list
+
+#include<stdio.h>
+#include<stdlib.h>
 
 // Structure for a stack node
 struct Node {
