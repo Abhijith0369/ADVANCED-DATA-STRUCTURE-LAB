@@ -1,59 +1,89 @@
-#include<stdio.h>
-int top=-1,s[5],i,item,choice;
+#include <stdio.h>
+
+#define SIZE 5   // Maximum stack size
+
+int top = -1;
+int s[SIZE];
+
 void push(int item)
 {
-    if(top>=5)
+    if (top == SIZE - 1)
     {
-        printf("stack is full\n");
+        printf("Stack is full (Overflow)\n");
     }
     else
     {
-        s[top]=item;
-        top=top+1;
+        top++;
+        s[top] = item;
+        printf("Inserted %d\n", item);
     }
 }
+
 void pop()
 {
-    if(top<=-1)
+    if (top == -1)
     {
-        printf("stack is empty\n");
+        printf("Stack is empty (Underflow)\n");
     }
     else
     {
-        item=s[top];
-        top=top-1;
+        int deleted = s[top];
+        top--;
+        printf("Popped element: %d\n", deleted);
     }
 }
+
+void display()
+{
+    if (top == -1)
+    {
+        printf("Stack is empty\n");
+    }
+    else
+    {
+        printf("Stack contents:\n");
+        for (int i = top; i >= 0; i--)
+        {
+            printf("%d\n", s[i]);
+        }
+    }
+}
+
 int main()
 {
+    int choice, item;
+
+    printf("Stack operations using Array\n");
+
     while (1)
     {
-        printf("\n1.push\n2.pop\n3.Display\n4.Exit\n");
-        printf("enter your choice\n");
-        scanf("%d",&choice);
-        if (choice==4)
-        break;
-        if (choice==1)
+        printf("\n----------------\n");
+        printf("1. Push\n2. Pop\n3. Display\n4. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice)
         {
-            printf("enter the element\n");
-            scanf("%d",&item);
-            push(item);
+            case 1:
+                printf("Enter the element: ");
+                scanf("%d", &item);
+                push(item);
+                break;
+
+            case 2:
+                pop();
+                break;
+
+            case 3:
+                display();
+                break;
+
+            case 4:
+                printf("Exiting...\n");
+                return 0;
+
+            default:
+                printf("Invalid choice\n");
         }
-        if (choice==2)
-        {
-            printf("pop element\n");
-            pop();
-        }
-        if (choice==3)
-        {
-            printf("Display\n");
-            for (i=top-1;i>=-1;i--)
-            {
-                printf("%d\n",s[i]);
-            }
-            
-        }
-        
     }
-    return 0;
 }
